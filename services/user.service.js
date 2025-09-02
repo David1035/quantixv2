@@ -1,3 +1,4 @@
+const { models } = require('./../libs/sequelize')
 
 class UserService {
   constructor(){
@@ -5,22 +6,12 @@ class UserService {
   }
 
   async create(data) {
-
+    const newUser = await models.User.create(data);
+    return newUser;
   }
 
   async find() {
-    const nombres = {
-      name: "David Hernandez",
-      cel: 3103667414,
-      kiy: "Juan Perez"
-    }
-    const data = {
-      ...nombres,
-      kiy: "lopez",
-      user: {
-        name: "leche de vaca"
-      }
-    }
+    const data = await models.User.findAll();
     return data;
   }
 

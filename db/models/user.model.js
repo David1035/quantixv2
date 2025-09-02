@@ -11,6 +11,7 @@ const UserModel = {
   },
   email: {
     allowNull: false,
+    unique: true,
     type: DataTypes.STRING
   },
   password: {
@@ -40,7 +41,7 @@ class User extends Model {
       sequelize,
       tableName: USER_TABLE,
       modelName: 'User',
-      timesTamps: false
+      timestamps: false
     }
   }
 }
