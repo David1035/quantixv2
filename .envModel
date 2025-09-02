@@ -1,0 +1,7 @@
+
+PORT='puerto'
+DB_USER='usaurioBaseDatos'
+DB_PASSWORD='contraseñaBD'
+DB_HOST='localhost'
+DB_NAME='nombre BD'
+DB_PORT='puertoBD'
