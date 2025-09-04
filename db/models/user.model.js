@@ -20,7 +20,8 @@ const UserModel = {
   },
   role: {
     allowNull: false,
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    defaultValue: 'vendedor'
   },
   createdAT: {
     allowNull: false,
@@ -32,8 +33,11 @@ const UserModel = {
 
 
 class User extends Model {
-  static associate(){
-    // aquí van las relaciones
+  static associate(models){
+    this.hasOne(models.Profile, {
+      as: 'profile',
+      foreignKey: 'userId'
+    })
   }
 
   static config(sequelize) {
