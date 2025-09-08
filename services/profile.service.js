@@ -14,7 +14,9 @@ class ProfileService {
   }
 
   async find() {
-    const data = await models.Profile.findAll();
+    const data = await models.Profile.findAll({
+      include: ['user']
+    });
     return data;
   }
 
