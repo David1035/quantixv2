@@ -2,7 +2,7 @@ const { UserModel, User } = require('./user.model');
 const { ProfileModel, Profile } = require('./profile.model');
 const { CustomerModel, Customer } = require('./customer.model');
 const { CreditModel, Credit } = require('./credit.model');
-const { CreditPaymentsModel, CreditPayments } = require('./credit.payments');
+const { CreditPaymentsModel, CreditPayments } = require('./credit-payments.model');
 //const {} = require('');
 
 function setupModel (sequelize) {

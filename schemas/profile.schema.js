@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const {createUserSchema, updateUserSchema } = require('./user.schemas')
+const {createUserSchema, updateUserSchema } = require('./user.schema')
 
 const id = Joi.number().integer();
 const name = Joi.string();

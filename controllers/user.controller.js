@@ -1,7 +1,7 @@
 const express = require('express');
 const UserService = require('./../services/user.service');
 const validatorHandler = require('./../middlewares/validation.handler')
-const { createUserSchema, updateUserSchema, getUserShema } = require('./../schemas/user.schemas')
+const { createUserSchema, updateUserSchema, getUserShema } = require('./../schemas/user.schema')
 
 
 const service = new UserService();
@@ -34,8 +34,10 @@ router.get('/',
 );
 
 router.get('/:id',
+  validatorHandler(getUserShema, 'id'),
   async (req, res, next) => {
     try {
+      const { id } = req.params;
 
     } catch (error) {
       next(error)
