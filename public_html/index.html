@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dashboard - Quantix</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SheetJS (para exportar Excel) -->
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+</head>
+<body class="flex min-h-screen bg-gray-100 font-sans">
+  <!-- Botón para ocultar/mostrar el panel lateral -->
+  <button id="toggleSidebarBtn" class="fixed top-4 left-64 bg-[#23436B] text-white px-3 py-2 rounded-full shadow hover:bg-[#12273D] z-20 transition-all duration-300">
+    ☰
+  </button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="w-64 bg-[#12273D] text-white flex flex-col min-h-screen transition-transform transform">
+    <div class="p-6 flex items-center space-x-3 border-b border-white/20">
+      <img src="./images/logo.png" alt="Logo" class="w-10 h-10 object-contain" />
+      <span class="text-lg font-bold">Quantix</span>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-2">
+      <!-- Links a los módulos (archivos locales) -->
+      <a href="index.html" class="flex items-center p-2 rounded hover:bg-white/10"><span></span><span class="ml-3">Inicio</span></a>
+      <a href="agregar.html" class="flex items-center p-2 rounded hover:bg-white/10"><span></span><span class="ml-3">Agregar</span></a>
+      <a href="modificar.html" class="flex items-center p-2 rounded hover:bg-white/10"><span></span><span class="ml-3">Modificar</span></a>
+      <a href="eliminar.html" class="flex items-center p-2 rounded hover:bg-white/10"><span></span><span class="ml-3">Eliminar</span></a>
+      <a href="reportes.html" class="flex items-center p-2 rounded hover:bg-white/10"><span></span><span class="ml-3">Generar reportes</span></a>
+      <a href="login.html" class="flex items-center p-2 rounded hover:bg-white/10"><span></span><span class="ml-3">Salir</span></a>
+    </nav>
+  </aside>
+
+  <!-- Contenido principal -->
+  <main id="mainContent" class="flex-1 p-6 bg-gray-100 transition-all duration-300">
+    <header class="mb-6 flex items-center justify-between">
+      <h1 class="text-2xl font-bold text-gray-800">Sistema de Inventario Quantix</h1>
+      <div class="text-sm text-gray-600">Bienvenido — Panel principal</div>
+    </header>
+
+    <!-- Alerta -->
+    <div id="lowStockAlert" class="hidden bg-yellow-100 text-yellow-800 border border-yellow-300 p-4 rounded mb-6">
+      ⚠️ Alerta: Existen productos con poco stock.
+    </div>
+
+    <!-- Tabla -->
+    <div class="bg-white rounded shadow overflow-x-auto">
+      <table id="productsTable" class="min-w-full text-sm text-left">
+        <thead class="bg-[#12273D] text-white">
+          <tr>
+            <th class="px-4 py-3">ID</th>
+            <th class="px-4 py-3">Producto</th>
+            <th class="px-4 py-3">Cantidad</th>
+            <th class="px-4 py-3">Categoría</th>
+            <th class="px-4 py-3">Precio</th>
+            <th class="px-4 py-3">Fecha</th>
+            <th class="px-4 py-3">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700" id="productsTbody">
+          <!-- Filas generadas por JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="mt-8 grid grid-cols-2 gap-8">
+      <!-- Gráfico de pastel -->
+      <div class="bg-white p-6 rounded shadow max-w-md mx-auto">
+        <h3 class="text-lg font-semibold mb-4">Stock por Categorías (Valor Monetario)</h3>
+        <div class="h-64">
+          <canvas id="stockPieChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Gráfico de barras -->
+      <div class="bg-white p-6 rounded shadow max-w-md mx-auto">
+        <h3 class="text-lg font-semibold mb-4">Entradas y Salidas de Inventario</h3>
+        <div class="h-64">
+          <canvas id="inventoryBarChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./scripts.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable(); // Renderizar la tabla al cargar la página
+      renderStockPieChart(); // Renderizar el gráfico de pastel
+      renderInventoryBarChart(); // Renderizar el gráfico de barras
+
+      // Función para ocultar/mostrar el panel lateral
+      const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+      const sidebar = document.getElementById('sidebar');
+      const mainContent = document.getElementById('mainContent');
+
+      toggleSidebarBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full'); // Ocultar/mostrar el panel lateral
+        toggleSidebarBtn.classList.toggle('left-4'); // Mover el botón al borde izquierdo
+        toggleSidebarBtn.classList.toggle('left-64'); // Mover el botón al borde del menú
+        mainContent.classList.toggle('ml-64'); // Ajustar el margen izquierdo del contenido principal
+        mainContent.classList.toggle('ml-0'); // Centrar el contenido cuando la barra está oculta
+      });
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', exportToExcel); // Asociar el botón a la función
+
+    // Función para renderizar el gráfico de pastel
+    function renderStockPieChart() {
+      const products = JSON.parse(localStorage.getItem('products')) || [];
+      const categories = [...new Set(products.map(product => product.category))];
+      const categoryValues = categories.map(category => {
+        return products
+          .filter(product => product.category === category)
+          .reduce((sum, product) => sum + product.price * product.quantity, 0);
+      });
+
+      const ctx = document.getElementById('stockPieChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: categories,
+          datasets: [{
+            data: categoryValues,
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+          }],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return `Valor: $${context.raw.toFixed(2)}`;
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+
+    // Función para renderizar el gráfico de barras con valores monetarios y etiquetas por meses
+    function renderInventoryBarChart() {
+      const inventoryData = JSON.parse(localStorage.getItem('inventoryData')) || {};
+
+      // Filtrar claves válidas que representen meses
+      const months = Object.keys(inventoryData)
+        .filter(key => inventoryData[key]?.entradas !== undefined && inventoryData[key]?.salidas !== undefined)
+        .sort((a, b) => new Date(`1 ${a}`) - new Date(`1 ${b}`)); // Ordenar meses cronológicamente
+
+      const entradas = months.map(month => inventoryData[month].entradas);
+      const salidas = months.map(month => inventoryData[month].salidas);
+
+      const ctx = document.getElementById('inventoryBarChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: months, // Etiquetas de los meses
+          datasets: [
+            {
+              label: 'Entradas',
+              data: entradas,
+              backgroundColor: '#36A2EB', // Azul para entradas
+            },
+            {
+              label: 'Salidas',
+              data: salidas,
+              backgroundColor: '#4BC0C0', // Verde para salidas
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return `${context.dataset.label}: ${context.raw}`;
+                },
+              },
+            },
+            datalabels: {
+              anchor: 'end',
+              align: 'top',
+              formatter: function (value) {
+                return `$${value.toFixed(2)}`;
+              },
+            },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function (value) {
+                  return `$${value}`;
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+  </script>
+</body>
+</html>

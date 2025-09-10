@@ -1,0 +1,43 @@
+body::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background-image: url('./images/olas.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+#sidebar {
+  transition: transform 0.3s ease-in-out;
+}
+
+#sidebar.-translate-x-full {
+  transform: translateX(-100%);
+}
+
+#toggleSidebarBtn {
+  top: 1rem; /* Separación desde la parte superior */
+  left: 16rem; /* Posición inicial alineada con el menú */
+  transition: left 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Transición suave para mover el botón */
+  background-color: #23436B; /* Color inicial del botón */
+  color: white; /* Texto blanco */
+  border-radius: 9999px; /* Botón redondo */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+#toggleSidebarBtn:hover {
+  background-color: #12273D; /* Cambiar color al pasar el cursor */
+}
+
+#mainContent {
+  margin-left: 16rem; /* Margen izquierdo cuando la barra está visible */
+  transition: margin-left 0.3s ease-in-out; /* Transición suave para el movimiento */
+}
+
+#mainContent.ml-0 {
+  margin-left: 0; /* Centrar el contenido cuando la barra está oculta */
+}

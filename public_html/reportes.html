@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reportes - Quantix</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+</head>
+<body class="flex min-h-screen bg-gray-100">
+  <aside class="w-64 bg-[#12273D] text-white p-6 min-h-screen">
+    <img src="./images/logo.png" alt="Logo" class="w-10 h-10 object-contain mb-4" />
+    <nav class="space-y-2">
+      <a href="index.html" class="block p-2 rounded hover:bg-white/10">Inicio</a>
+      <a href="agregar.html" class="block p-2 rounded hover:bg-white/10">Agregar</a>
+      <a href="modificar.html" class="block p-2 rounded hover:bg-white/10">Modificar</a>
+      <a href="eliminar.html" class="block p-2 rounded hover:bg-white/10">Eliminar</a>
+      <a href="reportes.html" class="block p-2 rounded bg-white/10">Reportes</a>
+    </nav>
+  </aside>
+
+  <main class="flex-1 p-8 bg-gray-100">
+    <h2 class="text-2xl font-semibold mb-6">Reportes</h2>
+
+    <div class="bg-white p-6 rounded shadow max-w-3xl">
+      <p class="mb-4 text-sm text-gray-600">Exportar la lista actual de productos a Excel.</p>
+      <div class="flex space-x-3">
+        <button id="exportBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Descargar Excel</button>
+        <a href="index.html" class="px-4 py-2 rounded border">Volver</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="./scripts.js"></script>
+  <script>
+  document.getElementById('exportBtn').addEventListener('click', exportToExcel);
+  </script>
+</body>
+</html>

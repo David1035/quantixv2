@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Modificar - Quantix</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex min-h-screen bg-gray-100">
+
+  <aside class="w-64 bg-[#12273D] text-white p-6 min-h-screen">
+    <img src="./images/logo.png" alt="Logo" class="w-10 h-10 object-contain mb-4" />
+    <nav class="space-y-2">
+      <a href="index.html" class="block p-2 rounded hover:bg-white/10">Inicio</a>
+      <a href="agregar.html" class="block p-2 rounded hover:bg-white/10">Agregar</a>
+      <a href="modificar.html" class="block p-2 rounded bg-white/10">Modificar</a>
+      <a href="eliminar.html" class="block p-2 rounded hover:bg-white/10">Eliminar</a>
+      <a href="reportes.html" class="block p-2 rounded hover:bg-white/10">Reportes</a>
+    </nav>
+  </aside>
+
+  <main class="flex-1 p-8 bg-gray-100">
+    <h2 class="text-2xl font-semibold mb-6">Modificar producto</h2>
+
+    <!-- Búsqueda por ID -->
+    <div class="max-w-lg mb-6">
+      <label class="block text-sm font-medium text-gray-700">Buscar por ID</label>
+      <div class="flex mt-2 space-x-2">
+        <input id="searchId" type="number" class="flex-1 border rounded px-3 py-2" />
+        <button id="btnSearch" class="bg-[#12273D] text-white px-4 py-2 rounded">Buscar</button>
+      </div>
+    </div>
+
+    <!-- Formulario de edición -->
+    <form id="editForm" class="max-w-lg bg-white p-6 rounded shadow space-y-4 hidden">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">ID</label>
+        <input id="e_id" type="number" class="mt-1 w-full border rounded px-3 py-2" readonly />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Producto</label>
+        <input id="e_producto" type="text" class="mt-1 w-full border rounded px-3 py-2" />
+      </div>
+
+      <div class="grid grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Cantidad</label>
+          <input id="e_cantidad" type="number" min="0" class="mt-1 w-full border rounded px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Categoría</label>
+          <input id="e_categoria" type="text" class="mt-1 w-full border rounded px-3 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Precio</label>
+          <input id="e_precio" type="number" min="0" class="mt-1 w-full border rounded px-3 py-2" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Fecha</label>
+        <input id="e_fecha" type="date" class="mt-1 w-full border rounded px-3 py-2" />
+      </div>
+
+      <div class="flex space-x-3">
+        <button type="submit" class="bg-[#12273D] text-white px-4 py-2 rounded">Guardar cambios</button>
+        <a href="index.html" class="px-4 py-2 rounded border">Volver</a>
+      </div>
+    </form>
+
+    <!-- Alternativa: Lista de productos para seleccionar -->
+    <div class="mt-8">
+      <h3 class="font-medium mb-2">Lista de productos</h3>
+      <div id="listContainer" class="bg-white p-4 rounded shadow max-w-2xl">
+        <!-- Render lista con botones editar -->
+      </div>
+    </div>
+  </main>
+
+  <script src="./scripts.js"></script>
+  <script>
+    renderList(); // Renderizar la lista de productos al cargar la página
+    document.getElementById('btnSearch').addEventListener('click', searchProductById);
+    document.getElementById('editForm').addEventListener('submit', saveProductChanges);
+  </script>
+</body>
+</html>
