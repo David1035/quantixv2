@@ -4,7 +4,7 @@ const { UserModel, USER_TABLE } = require('./../models/user.model');
 const { ProfileModel, PROFILE_TABLE } = require('./../models/profile.model');
 const { CustomerModel, CUSTOMER_TABLE } = require('./../models/customer.model');
 const { CreditModel, CREDIT_TABLE } = require('./../models/credit.model');
-const { CreditPaymentsModel, CREDIT_PAYMENTS_TABLE } = require('./../models/credit.payments');
+const { CreditPaymentsModel, CREDIT_PAYMENTS_TABLE } = require('./../models/credit-payments.model');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
