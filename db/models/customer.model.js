@@ -28,7 +28,7 @@ const CustomerModel = {
   estadoCredito: {
     allowNull: false,
     type: DataTypes.BOOLEAN,
-    defaultValue: 'false',
+    defaultValue: false,
     field: 'estado_credito'
   },
   createdAt: {
@@ -58,4 +58,4 @@ class Customer extends Model {
   }
 }
 
-module.exports = { CUSTOMER_TABLE, CustomerModel, Customer }
+module.exports = { CUSTOMER_TABLE, CustomerModel, Customer };

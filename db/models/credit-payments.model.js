@@ -43,11 +43,11 @@ class CreditPayments extends Model {
     return {
       sequelize,
       tableName: CREDIT_PAYMENTS_TABLE,
-      modelTable: 'CreditPayments',
+      modelName: 'CreditPayments',
       timestamps: false
     }
   }
 }
 
 
-module.exports = { CREDIT_PAYMENTS_TABLE, CreditPaymentsModel, CreditPayments }
+module.exports = { CREDIT_PAYMENTS_TABLE, CreditPaymentsModel, CreditPayments };

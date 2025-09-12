@@ -30,7 +30,7 @@ const CreditModel = {
     allowNull: false,
     field: 'is_active',
     type: DataTypes.BOOLEAN,
-    defaultValue: 'true'
+    defaultValue: true
   },
   createdAt: {
     allowNull: false,

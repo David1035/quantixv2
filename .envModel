@@ -1,7 +1,6 @@
-
-PORT='puerto'
-DB_USER='usaurioBaseDatos'
-DB_PASSWORD='contraseñaBD'
-DB_HOST='localhost'
-DB_NAME='nombre BD'
-DB_PORT='puertoBD'
+PORT=3000
+DB_USER=usuarioBaseDatos
+DB_PASSWORD=contraseñaBD
+DB_HOST=localhost
+DB_NAME=nombreBD
+DB_PORT=5432
