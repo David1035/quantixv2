@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agregar Producto - Quantix</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex min-h-screen bg-gray-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-[#12273D] text-white p-6 min-h-screen">
+    <img src="./images/logo.png" alt="Logo" class="w-10 h-10 object-contain mb-4" />
+    <nav class="space-y-2">
+      <a href="index.html" class="block p-2 rounded hover:bg-white/10">Inicio</a>
+      <a href="agregar.html" class="block p-2 rounded bg-white/10">Agregar</a>
+      <a href="modificar.html" class="block p-2 rounded hover:bg-white/10">Modificar</a>
+      <a href="eliminar.html" class="block p-2 rounded hover:bg-white/10">Eliminar</a>
+      <a href="reportes.html" class="block p-2 rounded hover:bg-white/10">Reportes</a>
+    </nav>
+  </aside>
+
+  <main class="flex-1 p-8 bg-gray-100">
+    <h2 class="text-2xl font-semibold mb-6">Agregar producto</h2>
+
+    <div class="grid grid-cols-2 gap-8">
+      <!-- Formulario de agregar producto -->
+      <form id="addProductForm" class="max-w-lg bg-white p-6 rounded shadow space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Producto</label>
+          <input id="producto" type="text" class="mt-1 w-full border rounded px-3 py-2" required />
+        </div>
+
+        <div class="grid grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Cantidad</label>
+            <input id="cantidad" type="number" min="0" class="mt-1 w-full border rounded px-3 py-2" required />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Categoría</label>
+            <select id="categoria" class="mt-1 w-full border rounded px-3 py-2" required>
+              <option value="" disabled selected>Seleccionar categoría</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Precio</label>
+            <input id="precio" type="number" min="0" class="mt-1 w-full border rounded px-3 py-2" required />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Fecha (auto)</label>
+          <input id="fecha" type="date" class="mt-1 w-full border rounded px-3 py-2 bg-gray-100 text-gray-400" disabled />
+        </div>
+
+        <div class="flex space-x-3">
+          <button type="submit" class="bg-[#12273D] text-white px-4 py-2 rounded">Guardar</button>
+          <a href="index.html" class="px-4 py-2 rounded border">Cancelar</a>
+        </div>
+      </form>
+
+      <!-- Gestión de categorías -->
+      <div class="bg-white p-6 rounded shadow">
+        <h3 class="text-lg font-semibold mb-4">Gestionar Categorías</h3>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Nombre de categoría</label>
+            <input id="newCategoryName" type="text" placeholder="Ej: Electrónica" class="w-full border rounded px-3 py-2" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Descripción</label>
+            <textarea id="newCategoryDescription" placeholder="Ej: Artículos tecnológicos..." class="w-full border rounded px-3 py-2"></textarea>
+          </div>
+          <button id="addCategoryBtn" class="bg-blue-500 text-white px-4 py-2 rounded">Agregar Categoría</button>
+        </div>
+        <h4 class="text-md font-semibold mt-6">Categorías añadidas</h4>
+        <ul id="categoryList" class="mt-4 space-y-2"></ul>
+      </div>
+    </div>
+
+    <!-- Tabla de productos añadidos -->
+    <div class="mt-8">
+      <h3 class="text-lg font-semibold mb-4">Productos Añadidos</h3>
+      <table class="min-w-full bg-white rounded shadow">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Producto</th>
+            <th class="px-4 py-2">Cantidad</th>
+            <th class="px-4 py-2">Categoría</th>
+            <th class="px-4 py-2">Precio</th>
+            <th class="px-4 py-2">Fecha</th>
+            <th class="px-4 py-2">Acción</th>
+          </tr>
+        </thead>
+        <tbody id="productsTbody" class="text-gray-700"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="./scripts.js"></script>
+  <script>
+    // Agregar producto
+    document.getElementById('addProductForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('producto').value.trim();
+      const stock = parseInt(document.getElementById('cantidad').value);
+      const categoryId = parseInt(document.getElementById('categoria').value);
+      const salePrice = parseFloat(document.getElementById('precio').value);
+
+      if (!name || isNaN(stock) || isNaN(salePrice) || isNaN(categoryId)) {
+        alert('Por favor completa todos los campos correctamente.');
+        return;
+      }
+
+      const purchasePrice = salePrice * 0.8;
+
+      const product = {
+        name,
+        stock,
+        salePrice,
+        purchasePrice,
+        categoryId
+      };
+
+      await addProduct(product);
+      alert('Producto agregado exitosamente');
+      this.reset();
+
+      cargarProductos();
+      renderCategories();
+    });
+
+    // Agregar categoría
+    document.getElementById('addCategoryBtn').addEventListener('click', async function () {
+      const name = document.getElementById('newCategoryName').value.trim();
+      const description = document.getElementById('newCategoryDescription').value.trim();
+
+      if (!name) {
+        alert('El nombre de la categoría es obligatorio.');
+        return;
+      }
+
+      await addCategory({ name, description });
+      document.getElementById('newCategoryName').value = '';
+      document.getElementById('newCategoryDescription').value = '';
+      renderCategories();
+    });
+
+    // Mostrar la fecha actual (solo visual)
+    const fechaInput = document.getElementById('fecha');
+    if (fechaInput) {
+      const today = new Date().toISOString().split('T')[0];
+      fechaInput.value = today;
+    }
+
+    // Cargar datos al inicio
+    cargarProductos();
+    renderCategories();
+  </script>
+</body>
+</html>
