@@ -1,9 +1,7 @@
 const { models } = require('./../libs/sequelize')
 
 class UserService {
-  constructor(){
-
-  }
+  constructor() {}
 
   async create(data) {
     const newUser = await models.User.create(data);
@@ -11,20 +9,33 @@ class UserService {
   }
 
   async find() {
-    const data = await models.User.findAll();
-    return data;
+    const users = await models.User.findAll();
+    return users;
   }
 
   async findOne(id) {
-
+    const user = await models.User.findByPk(id);
+    return user;
   }
 
   async update(id, changes) {
-
+    const user = await this.findOne(id);
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+    const updatedUser = await user.update(changes);
+    return updatedUser;
   }
-  async delete(id) {
 
+  async delete(id) {
+    const user = await this.findOne(id);
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+    await user.destroy();
+    return { message: 'Usuario eliminado', id };
   }
 }
 
 module.exports = UserService;
+
