@@ -16,7 +16,7 @@ class UserService {
   }
 
   async findOne(id) {
-    return []
+
   }
 
   async update(id, changes) {
