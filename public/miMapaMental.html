@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa Mental - Contexto Productivo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    .mapa {
+      position: relative;
+      width: 800px;
+      height: 800px;
+      margin: 0 auto;
+      border: 4px dashed #444;
+      border-radius: 50%;
+      background: white;
+    }
+    .centro {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 180px;
+      height: 180px;
+      margin: -90px;
+      background: #2b6cb0;
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+    }
+    .rama {
+      position: absolute;
+      width: 200px;
+      height: auto;
+      background: #edf2f7;
+      border-left: 4px solid #2b6cb0;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .rama h3 {
+      margin-top: 0;
+      color: #2b6cb0;
+    }
+    /* Posicionamiento radial de ramas */
+    .rama1 { top: 10%; left: 50%; transform: translateX(-50%); }
+    .rama2 { top: 30%; left: 85%; transform: translate(-50%, -50%); }
+    .rama3 { top: 70%; left: 85%; transform: translate(-50%, -50%); }
+    .rama4 { top: 90%; left: 50%; transform: translate(-50%, -100%); }
+    .rama5 { top: 70%; left: 15%; transform: translate(-50%, -50%); }
+    .rama6 { top: 30%; left: 15%; transform: translate(-50%, -50%); }
+  </style>
+</head>
+<body>
+
+  <h1 style="text-align:center;">Mapa Mental: Caracterización del Contexto Productivo Inmediato</h1>
+  <h2 style="text-align:center;">Autor: David Hernandez, Ficha: 2977486</h2>
+
+  <div class="mapa">
+    <div class="centro">Contexto Productivo Inmediato</div>
+
+    <div class="rama rama1">
+      <h3>Socioeconómicas</h3>
+      <ul>
+        <li>Nivel de empleo y desempleo</li>
+        <li>Ingreso promedio</li>
+        <li>Condiciones de vivienda</li>
+        <li>Acceso a servicios básicos</li>
+      </ul>
+    </div>
+
+    <div class="rama rama2">
+      <h3>Tecnológicas</h3>
+      <ul>
+        <li>Acceso a internet</li>
+        <li>Uso de TIC en empresas</li>
+        <li>Formación digital</li>
+        <li>Automatización productiva</li>
+      </ul>
+    </div>
+
+    <div class="rama rama3">
+      <h3>Políticas</h3>
+      <ul>
+        <li>Incentivos gubernamentales</li>
+        <li>Regulación laboral</li>
+        <li>Políticas de desarrollo</li>
+        <li>Normativas ambientales</li>
+      </ul>
+    </div>
+
+    <div class="rama rama4">
+      <h3>Culturales</h3>
+      <ul>
+        <li>Tradiciones locales</li>
+        <li>Lengua y valores</li>
+        <li>Identidad colectiva</li>
+        <li>Estilo de vida comunitario</li>
+      </ul>
+    </div>
+
+    <div class="rama rama5">
+      <h3>Educativas</h3>
+      <ul>
+        <li>Acceso a formación técnica</li>
+        <li>Instituciones de calidad</li>
+        <li>Oferta de formación dual</li>
+      </ul>
+    </div>
+
+    <div class="rama rama6">
+      <h3>Ambientales</h3>
+      <ul>
+        <li>Disponibilidad de recursos</li>
+        <li>Clima y geografía</li>
+        <li>Impacto ambiental de actividades</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
