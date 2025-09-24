@@ -34,7 +34,7 @@ const CreditModel = {
   },
   createdAt: {
     allowNull: false,
-    field: 'create_at',
+    field: 'created_at',
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW
   }

@@ -5,6 +5,8 @@ const { CreditModel, Credit } = require('./credit.model');
 const { CreditPaymentsModel, CreditPayments } = require('./credit-payments.model');
 const { CategoryModel, Category } = require('./../models/category.model');
 const { ProductModel, Product } = require('./../models/product.model');
+const { ProductSupplierModel, ProductSupplier } = require('./product-supplier.model');
+const { SupplierModel, Supplier} = require('./supplier.model');
 //const {} = require('');
 
 function setupModel (sequelize) {
@@ -15,6 +17,9 @@ function setupModel (sequelize) {
   CreditPayments.init(CreditPaymentsModel, CreditPayments.config(sequelize));
   Category.init(CategoryModel, Category.config(sequelize));
   Product.init(ProductModel, Product.config(sequelize));
+  Supplier.init(SupplierModel, Supplier.config(sequelize));
+  ProductSupplier.init(ProductSupplierModel, ProductSupplier.config(sequelize));
+
 
   Profile.associate(sequelize.models);
   User.associate(sequelize.models);
@@ -23,6 +28,8 @@ function setupModel (sequelize) {
   CreditPayments.associate(sequelize.models);
   Category.associate(sequelize.models);
   Product.associate(sequelize.models);
+  Supplier.associate(sequelize.models);
+  ProductSupplier.associate(sequelize.models);
 
 
 

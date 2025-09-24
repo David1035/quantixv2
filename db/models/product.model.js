@@ -42,7 +42,7 @@ const ProductModel = {
   },
   createdAt: {
     allowNull: false,
-    field: 'create_at',
+    field: 'created_at',
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW
   }
@@ -54,6 +54,12 @@ class Product extends Model {
       as: 'category',
       foreignKey: 'categoryId'
     });
+    this.belongsToMany(models.Supplier, {
+      as: 'suppliers',
+      through: models.ProductSupplier,
+      foreignKey: 'productId',
+      otherKey: 'supplierId'
+    })
   }
 
   static config(sequelize) {

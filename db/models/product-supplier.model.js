@@ -4,15 +4,15 @@ const { SUPPLIER_TABLE } = require('./supplier.model');
 
 const PRODUCT_SUPPLIER_TABLE = 'product_supplier';
 
-const productSupplierModel = {
+const ProductSupplierModel = {
   id: {
-    autoIncrement: false,
+    autoIncrement: true,
     primaryKey: true,
     allowNull: false,
     type: DataTypes.INTEGER
   },
-  idProduct: {
-    field: 'id_product',
+  productId: {
+    field: 'product_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
@@ -20,10 +20,10 @@ const productSupplierModel = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
-  idProveedor: {
-    field: 'id_supplier',
+  supplierId: {
+    field: 'supplier_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
@@ -31,10 +31,10 @@ const productSupplierModel = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   createdAt: {
-    field: 'create_at',
+    field: 'created_at',
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW
   }
@@ -42,19 +42,21 @@ const productSupplierModel = {
 }
 
 class ProductSupplier extends Model {
-  static associate(){
+  static associate(models){
     // relaciones
+    this.belongsTo(models.Supplier, {as: 'supplier', foreignKey: 'supllierId'});
+    this.belongsTo(models.Product, {as: 'product', foreignKey: 'productId'})
   }
 
   static config(sequelize){
     return {
       sequelize,
       tableName: PRODUCT_SUPPLIER_TABLE,
-      modelName: 'ProductSupllier',
+      modelName: 'ProductSupplier',
       timestamps: false
     }
   }
 }
 
 
-module.exports = { PRODUCT_SUPPLIER_TABLE, productSupplierModel }
+module.exports = { PRODUCT_SUPPLIER_TABLE, ProductSupplierModel, ProductSupplier }

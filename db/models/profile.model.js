@@ -29,6 +29,7 @@ const ProfileModel = {
     type: DataTypes.STRING
   },
   createdAt: {
+    field: 'created_at',
     allowNull: false,
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW

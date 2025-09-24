@@ -18,15 +18,20 @@ const SupplierModel = {
     type: DataTypes.STRING
   },
   createdAt: {
-    field: 'create_at',
+    field: 'created_at',
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW
   }
 }
 
 class Supplier extends Model {
-  static associate(){
-    //relacciones
+  static associate(models){
+    this.belongsToMany(models.Product, {
+      as: 'products',
+      through: models.ProductSupplier,
+      foreignKey: 'supplierId',
+      otherKey: 'productId'
+    })
   }
 
   static config(sequelize) {
