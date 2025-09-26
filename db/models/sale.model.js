@@ -1,5 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const { CUSTOMER_TABLE } = require('./customer.model');
+const { USER_TABLE } = require('./user.model');
+
 const SALE_TABLE = 'sales';
 
 const SaleModel = {
@@ -11,7 +14,8 @@ const SaleModel = {
   },
   fecha: {
     allowNull: true,
-    type: DataTypes.STRING
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW
   },
   total: {
     allowNull: false,
@@ -19,19 +23,25 @@ const SaleModel = {
   },
   customerId: {
     field: 'customer_id',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: {
-
-    }
+      model: CUSTOMER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   },
-  usuarioId: {
-    field: 'usuario_id',
+  userId: {
+    field: 'user_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
-
-    }
+      model: USER_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE'
   },
   createdAt: {
     field: 'created_at',
@@ -43,7 +53,22 @@ const SaleModel = {
 
 class Sale extends Model {
   static associate(models) {
+    // hasOne -> Tiene uno: Una venta tiene una factura (1:1). La FK está en invoices.sale_id
+    this.hasOne(models.Invoice, {
+      as: 'invoice',
+      foreignKey: 'saleId'
+      // onDelete/Update se controlan en el lado de Invoice (FK)
+    });
 
+    this.belongsTo(models.Customer, {
+      as: 'customer',
+      foreignKey: 'customerId'
+    })
+
+    this.belongsTo(models.User, {
+      as: 'user',
+      foreignKey: 'userId'
+    })
   }
 
   static config(sequelize){

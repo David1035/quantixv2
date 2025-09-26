@@ -1,5 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const { SALE_TABLE } = require('./sale.model');
+
 const INVOICE_TABLE = 'invoices';
 
 const InvoiceModel = {
@@ -22,9 +24,11 @@ const InvoiceModel = {
   saleId: {
     field: 'sale_id',
     allowNull: false,
+    unique: true,
     type: DataTypes.INTEGER,
     references: {
-
+      model: SALE_TABLE,
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
@@ -39,10 +43,21 @@ const InvoiceModel = {
 
 class Invoice extends Model {
   static associate(models) {
-    //relación uno a uno con factura
+    //belongsTo -> pertenece a: La factura pertenece a una venta (FK en invoices)
+    this.belongsTo(models.Sale, {
+      as: 'sale',
+      foreignKey: 'saleId'
+    })
   }
 
   static config(sequelize) {
-    
+    return {
+      sequelize,
+      tableName: INVOICE_TABLE,
+      modelName: 'Invoice',
+      timestamps: false
+    }
   }
 }
+
+module.exports = { INVOICE_TABLE, InvoiceModel, Invoice };

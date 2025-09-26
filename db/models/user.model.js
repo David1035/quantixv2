@@ -23,7 +23,7 @@ const UserModel = {
     type: DataTypes.STRING,
     defaultValue: 'vendedor'
   },
-  createdAT: {
+  createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'created_at',
@@ -36,6 +36,11 @@ class User extends Model {
   static associate(models){
     this.hasOne(models.Profile, {
       as: 'profile',
+      foreignKey: 'userId'
+    })
+
+    this.hasMany(models.Sale, {
+      as: 'sales',
       foreignKey: 'userId'
     })
   }
@@ -51,4 +56,5 @@ class User extends Model {
 }
 
 module.exports = { USER_TABLE, UserModel, User }
+
 

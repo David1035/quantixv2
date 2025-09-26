@@ -45,6 +45,12 @@ class Customer extends Model {
     this.hasMany(models.Credit, {
       as: 'credit',
       foreignKey: 'customerId'
+    });
+
+    //Tiene muchas: un cliente tiene muchas ventas.
+    this.hasMany(models.Sale, {
+      as: 'sales',
+      foreignKey: 'customerId'
     })
   }
 
