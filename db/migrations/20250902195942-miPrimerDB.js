@@ -9,6 +9,10 @@ const { CategoryModel, CATEGORY_TABLE } = require('./../models/category.model');
 const { ProductModel, PRODUCT_TABLE } = require('./../models/product.model');
 const { ProductSupplierModel, PRODUCT_SUPPLIER_TABLE } = require('./../models/product-supplier.model');
 const { SupplierModel, SUPPLIER_TABLE } = require('./../models/supplier.model');
+const { SaleModel, SALE_TABLE } = require('./../models/sale.model');
+const { DetailSaleModel, DETAIL_SALE_TABLE } = require('./../models/detail-sale.model');
+const { InvoiceModel, INVOICE_TABLE } = require('./../models/invoice.model');
+//REGISTRAR
 
 
 /** @type {import('sequelize-cli').Migration} */
