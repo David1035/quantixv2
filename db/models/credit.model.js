@@ -11,7 +11,7 @@ const CreditModel = {
     type: DataTypes.INTEGER
   },
   customerId: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     field: 'customer_id',
     references: {
@@ -30,7 +30,7 @@ const CreditModel = {
     allowNull: false,
     field: 'is_active',
     type: DataTypes.BOOLEAN,
-    defaultValue: 'true'
+    defaultValue: true
   },
   createdAt: {
     allowNull: false,

@@ -7,6 +7,9 @@ const { CategoryModel, Category } = require('./../models/category.model');
 const { ProductModel, Product } = require('./../models/product.model');
 const { ProductSupplierModel, ProductSupplier } = require('./product-supplier.model');
 const { SupplierModel, Supplier} = require('./supplier.model');
+const { SaleModel, Sale } = require('./sale.model');
+const { InvoiceModel, Invoice } = require('./invoice.model');
+const { DetailSaleModel, DetailSale } = require('./detail-sale.model');
 //const {} = require('');
 
 function setupModel (sequelize) {
@@ -19,6 +22,9 @@ function setupModel (sequelize) {
   Product.init(ProductModel, Product.config(sequelize));
   Supplier.init(SupplierModel, Supplier.config(sequelize));
   ProductSupplier.init(ProductSupplierModel, ProductSupplier.config(sequelize));
+  Sale.init(SaleModel, Sale.config(sequelize));
+  Invoice.init(InvoiceModel, Invoice.config(sequelize));
+  DetailSale.init(DetailSaleModel, DetailSale.config(sequelize));
 
 
   Profile.associate(sequelize.models);
@@ -30,9 +36,9 @@ function setupModel (sequelize) {
   Product.associate(sequelize.models);
   Supplier.associate(sequelize.models);
   ProductSupplier.associate(sequelize.models);
-
-
-
-}
+  Sale.associate(sequelize.models);
+  Invoice.associate(sequelize.models);
+  DetailSale.associate(sequelize.models);
+  }
 
 module.exports = setupModel;

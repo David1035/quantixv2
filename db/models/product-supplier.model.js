@@ -44,7 +44,7 @@ const ProductSupplierModel = {
 class ProductSupplier extends Model {
   static associate(models){
     // relaciones
-    this.belongsTo(models.Supplier, {as: 'supplier', foreignKey: 'supllierId'});
+    this.belongsTo(models.Supplier, {as: 'supplier', foreignKey: 'supplierId'});
     this.belongsTo(models.Product, {as: 'product', foreignKey: 'productId'})
   }
 

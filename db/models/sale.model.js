@@ -69,6 +69,13 @@ class Sale extends Model {
       as: 'user',
       foreignKey: 'userId'
     })
+
+    this.belongsToMany(models.Product, {
+      as: 'productos',
+      through: models.DetailSale,
+      foreignKey: 'saleId',
+      otherKey: 'productId'
+    })
   }
 
   static config(sequelize){

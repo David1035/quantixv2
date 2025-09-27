@@ -1,5 +1,8 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const { PRODUCT_TABLE } = require('./product.model');
+const { SALE_TABLE } = require('./sale.model');
+
 const DETAIL_SALE_TABLE = 'detail_sale';
 
 const DetailSaleModel = {
@@ -14,17 +17,19 @@ const DetailSaleModel = {
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
-
+      model: SALE_TABLE,
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
   },
-  userId: {
-    field: 'user_id',
+  productId: {
+    field: 'product_id',
     allowNull: false,
     type: DataTypes.INTEGER,
     references: {
-
+      model: PRODUCT_TABLE,
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE'
@@ -46,7 +51,8 @@ const DetailSaleModel = {
 
 class DetailSale extends Model {
   static associate(models) {
-
+    this.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' });
+    this.belongsTo(models.Product, { as: 'product', foreignKey: 'productId' });
   }
 
   static config(sequelize) {

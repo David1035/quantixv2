@@ -12,7 +12,6 @@ const { SupplierModel, SUPPLIER_TABLE } = require('./../models/supplier.model');
 const { SaleModel, SALE_TABLE } = require('./../models/sale.model');
 const { DetailSaleModel, DETAIL_SALE_TABLE } = require('./../models/detail-sale.model');
 const { InvoiceModel, INVOICE_TABLE } = require('./../models/invoice.model');
-//REGISTRAR
 
 
 /** @type {import('sequelize-cli').Migration} */
@@ -27,8 +26,9 @@ module.exports = {
     await queryInterface.createTable(PRODUCT_TABLE, ProductModel);
     await queryInterface.createTable(SUPPLIER_TABLE, SupplierModel);
     await queryInterface.createTable(PRODUCT_SUPPLIER_TABLE, ProductSupplierModel);
-
-
+    await queryInterface.createTable(SALE_TABLE, SaleModel);
+    await queryInterface.createTable(DETAIL_SALE_TABLE, DetailSaleModel);
+    await queryInterface.createTable(INVOICE_TABLE, InvoiceModel);
   },
 
   async down (queryInterface) {
@@ -40,6 +40,9 @@ module.exports = {
     await queryInterface.dropTable(PRODUCT_SUPPLIER_TABLE);
     await queryInterface.dropTable(PRODUCT_TABLE);
     await queryInterface.dropTable(SUPPLIER_TABLE);
+    await queryInterface.dropTable(INVOICE_TABLE);
+    await queryInterface.dropTable(SALE_TABLE);
+    await queryInterface.dropTable(DETAIL_SALE_TABLE);
   }
 
 

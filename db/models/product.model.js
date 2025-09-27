@@ -59,6 +59,13 @@ class Product extends Model {
       through: models.ProductSupplier,
       foreignKey: 'productId',
       otherKey: 'supplierId'
+    });
+
+    this.belongsToMany(models.Sale, {
+      as: 'ventas',
+      through: models.DetailSale,
+      foreignKey: 'productId',
+      otherKey: 'saleId'
     })
   }
 

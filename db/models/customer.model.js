@@ -28,7 +28,7 @@ const CustomerModel = {
   estadoCredito: {
     allowNull: false,
     type: DataTypes.BOOLEAN,
-    defaultValue: 'false',
+    defaultValue: false,
     field: 'estado_credito'
   },
   createdAt: {
