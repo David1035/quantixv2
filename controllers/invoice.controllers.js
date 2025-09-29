@@ -1,25 +1,23 @@
 const express = require('express');
-const ProfileService = require('./../services/profile.service');
-const validatorHandler = require('./../middlewares/validation.handler');
-const { createProfileSchema, updateProfileSchema, getProfileSchema } = require('./../schemas/profile.schema');
+const validadorHanlder = require('./../middlewares/validation.handler.js');
+const { createInvoiceSchemas, updateInvoiceSchemas, getInvoiceSchemas } = require('./../schemas/invoice.schema');
+const InvoiceService = require('./../services/invoice.service.js');
 
+const service = new InvoiceService();
 const router = express.Router();
-const service = new ProfileService();
-
-
 
 router.post('/',
-  validatorHandler(createProfileSchema, 'body'),
+  validadorHanlder(createInvoiceSchemas, 'body'),
   async (req, res, next) => {
     try {
       const body = req.body;
-      const newProfile = await service.create(body);
-      res.json(newProfile);
+      const newInvoice = await service.create(body);
+      res.json(newInvoice);
     } catch (error) {
       next(error);
     }
   }
-);
+)
 
 router.get('/',
   async (req, res, next) => {
@@ -30,37 +28,38 @@ router.get('/',
       next(error);
     }
   }
-);
+)
 
 router.get('/:id',
-  validatorHandler(getProfileSchema, 'params'),
+  validadorHanlder(getInvoiceSchemas, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const data = await service.findOne(id);
-      res.json(data)
+      res.json(data);
     } catch (error) {
       next(error);
     }
   }
-);
+)
 
-router.patch('/:id',
-  validatorHandler(getProfileSchema, 'params'),
-  validatorHandler(updateProfileSchema, 'body'),
+router.post('/:id',
+  validadorHanlder(getInvoiceSchemas, 'params'),
+  validadorHanlder(updateInvoiceSchemas, 'body'),
   async (req, res, next) => {
     try {
-        const { id } = req.params;
-        const body = req.body;
-        const data = await service.findOne(id, body);
-        res.json(data);
+      const { id } = req.params;
+      const body = req.body;
+      const data = await service.update(id, body);
+      req.json(data);
     } catch (error) {
       next(error);
     }
   }
-);
+)
 
 router.delete('/:id',
+  validadorHanlder(getInvoiceSchemas, 'params'),
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -70,6 +69,6 @@ router.delete('/:id',
       next(error);
     }
   }
-);
+)
 
 module.exports = router;

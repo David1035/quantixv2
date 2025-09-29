@@ -14,7 +14,9 @@ class UserService {
   }
 
   async findOne(id) {
-    const user = await models.User.findByPk(id);
+    const user = await models.User.findByPk(id, {
+      include: ['profile', 'sales'] // incluye las ventas y el perfil
+    });
     return user;
   }
 

@@ -13,7 +13,6 @@ const createProfileSchema = Joi.object({
   lastName: lastName.required(),
   document: document.required(),
   phone: phone.required(),
-  //userId: userId.required(),
   user: createUserSchema
 });
 
@@ -23,7 +22,7 @@ const updateProfileSchema = Joi.object({
   document: document,
   phone: phone,
   userId: userId,
-  user: createUserSchema
+  user: updateUserSchema
 });
 
 const getProfileSchema = Joi.object({
