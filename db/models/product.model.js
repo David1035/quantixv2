@@ -15,11 +15,6 @@ const ProductModel = {
     allowNull: false,
     type: DataTypes.STRING
   },
-  purchasePrice: {
-    allowNull: false,
-    field: 'purchase_price',
-    type: DataTypes.DECIMAL(10, 2)
-  },
   salePrice: {
     allowNull: false,
     field: 'sale_price',
