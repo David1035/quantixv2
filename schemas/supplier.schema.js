@@ -12,6 +12,10 @@ const createSupplierSchema = Joi.object({
 const updateSupplierSchema = Joi.object({
   name: name,
   contacto: contacto
+});
+
+const getSupplierSchema = Joi.object({
+  id: id.required()
 })
 
-module.exports = { createSupplierSchema, updateSupplierSchema };
+module.exports = { createSupplierSchema, updateSupplierSchema, getSupplierSchema };

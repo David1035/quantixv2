@@ -14,4 +14,8 @@ const updateProductSupplierSchema = Joi.object({
   supplierId: supplierId
 })
 
-module.exports = { createProductSupplierSchema, updateProductSupplierSchema };
+const getProductSupplierSchema = Joi.object({
+  id: id.required(),
+})
+
+module.exports = { createProductSupplierSchema, updateProductSupplierSchema, getProductSupplierSchema };

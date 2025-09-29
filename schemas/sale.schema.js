@@ -20,4 +20,8 @@ const updateSaleSchema = Joi.object({
   userId: userId
 })
 
-module.exports = { createSaleSchema, updateSaleSchema };
+const getSaleSchemna = Joi.object({
+  id: id.required()
+})
+
+module.exports = { createSaleSchema, updateSaleSchema, getSaleSchemna };
