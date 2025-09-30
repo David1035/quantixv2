@@ -4,8 +4,8 @@ const boom = require('@hapi/boom');
 class SupplierService {
   constructor(){}
 
-  async create(data){
-    const data = await models.Supplier.create(data);
+  async create(body){
+    const data = await models.Supplier.create(body);
     return data;
   }
 
@@ -29,9 +29,9 @@ class SupplierService {
     return rta;
   }
 
-  async detele(id){
+  async delete(id){
     const data = await this.findOne(id);
-    data.destroy();
+    await data.destroy();
     return { id, status: 'eliminado' }
   }
 }

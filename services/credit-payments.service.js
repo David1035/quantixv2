@@ -4,8 +4,8 @@ const boom = require('@hapi/boom');
 class CreditPaymentsService {
   constructor(){}
 
-  async create(data){
-    const data = await models.CreditPayments.create(data);
+  async create(body){
+    const data = await models.CreditPayments.create(body);
     return data;
   }
 
@@ -31,7 +31,7 @@ class CreditPaymentsService {
 
   async detele(id){
     const data = await this.findOne(id);
-    data.destroy();
+    await data.destroy();
     return { id, status: 'eliminado' }
   }
 }

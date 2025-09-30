@@ -4,8 +4,8 @@ const boom = require('@hapi/boom');
 class SaleService {
   constructor(){}
 
-  async create(data){
-    const data = await models.Sale.create(data);
+  async create(body){
+    const data = await models.Sale.create(body);
     return data;
   }
 
@@ -31,7 +31,7 @@ class SaleService {
 
   async detele(id){
     const data = await this.findOne(id);
-    data.destroy();
+    await data.destroy();
     return { id, status: 'eliminado' }
   }
 }

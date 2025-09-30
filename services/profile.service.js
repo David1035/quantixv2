@@ -6,8 +6,8 @@ class ProfileService {
 
   }
 
-  async create(data){
-    const newProfile = await models.Profile.create(data, {
+  async create(body){
+    const newProfile = await models.Profile.create(body, {
       include: ['user']
     });
     return newProfile;
@@ -36,7 +36,7 @@ class ProfileService {
 
   async delete (id) {
     const profile = await this.findOne(id);
-    profile.destroy();
+    await profile.destroy();
     return {id, message: 'Perfil eliminado'}
   }
 }

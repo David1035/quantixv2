@@ -3,8 +3,8 @@ const { models } = require('./../libs/sequelize')
 class UserService {
   constructor() {}
 
-  async create(data) {
-    const newUser = await models.User.create(data);
+  async create(body) {
+    const newUser = await models.User.create(body);
     return newUser;
   }
 
