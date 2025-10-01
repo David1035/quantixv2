@@ -8,7 +8,6 @@ const categoryId = Joi.number().integer().required();
 
 const createProductSchema = Joi.object({
   name: name.required(),
-  purchasePrice: purchasePrice.required(),
   salePrice: salePrice.required(),
   stock: stock.required(),
   categoryId: categoryId
@@ -16,7 +15,6 @@ const createProductSchema = Joi.object({
 
 const updateProductSchema = Joi.object({
   name,
-  purchasePrice,
   salePrice,
   stock,
   categoryId

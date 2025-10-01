@@ -1,0 +1,16 @@
+{
+	"name": "David",
+	"lastName": "Hernandez",
+	"document": "1033632545",
+	"phone": "3105632114",
+	"user": {
+	"email": "davyj5h@gmail.com",
+	"password": "luna2025*",
+	"role": "administrador"
+	}
+}
+
+{
+  "username": "davyj5h@gmail.com",
+  "password": "luna2025*"
+}

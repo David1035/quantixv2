@@ -1,5 +1,7 @@
 const { models } = require('./../libs/sequelize');
 const boom = require('@hapi/boom');
+const bcrypt = require('bcrypt');
+
 
 class ProfileService {
   constructor(){
@@ -7,10 +9,24 @@ class ProfileService {
   }
 
   async create(body){
-    const newProfile = await models.Profile.create(body, {
+    const hash = await bcrypt.hash(body.user.password, 10);
+    const newData = {
+      ...body,
+      user: {
+        ...body.user,
+        password: hash
+      }
+    }
+    const newProfile = await models.Profile.create(newData,{
       include: ['user']
     });
-    return newProfile;
+
+    const plainProfile = newProfile.toJSON();
+    if(plainProfile.user){
+      delete plainProfile.user.password;
+    }
+
+    return plainProfile;
   }
 
   async find() {

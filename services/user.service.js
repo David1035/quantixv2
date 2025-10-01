@@ -1,16 +1,29 @@
 const { models } = require('./../libs/sequelize')
+const bcrypt = require('bcrypt');
 
 class UserService {
   constructor() {}
 
   async create(body) {
-    const newUser = await models.User.create(body);
+    const hash = await bcrypt.hash(body.password, 10);
+    const newUser = await models.User.create({
+      ...body,
+      password: hash
+    });
+    delete newUser.dataValues.password;
     return newUser;
   }
 
   async find() {
     const users = await models.User.findAll();
     return users;
+  }
+
+  async findByEmail(email) {
+    const user = await models.User.findOne({
+      where: { email }
+    });
+    return user;
   }
 
   async findOne(id) {

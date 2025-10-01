@@ -1,6 +1,5 @@
 const express = require('express');
 
-
 const userController = require('./../controllers/user.controller');
 const profileController = require('./../controllers/profile.controller');
 const customerController = require('./../controllers/customer.controller');
@@ -11,6 +10,7 @@ const saleController = require('./../controllers/sale.controller');
 const supplierController = require('./../controllers/supplier.controller');
 const productSupplierController = require('./../controllers/product-supplier.controller');
 const detailSaleController = require('./../controllers/detail-sale.controller');
+const authController = require('./../controllers/auth.controller');
 
 
 
@@ -20,15 +20,16 @@ function routerApi(app) {
   app.use('/api/v1', router);
 
   router.use('/users', userController);
-  router.use('/profile', profileController);
+  router.use('/profiles', profileController);
   router.use('/customers', customerController);
   router.use('/products', productController);
   router.use('/categories', categoryController);
   router.use('/invoices', invoiceController);
   router.use('/sales', saleController);
   router.use('/suppliers', supplierController);
-  router.use('/productSupplier', productSupplierController);
-  router.use('/detailSale', detailSaleController);
+  router.use('/productSuppliers', productSupplierController);
+  router.use('/detailSales', detailSaleController);
+  router.use('/auth', authController);
 }
 
 
