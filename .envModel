@@ -6,3 +6,4 @@ DB_HOST='localhost'
 DB_NAME='nombre BD'
 DB_PORT='puertoBD'
 API_KEY=
+JWT_SECRET='frase secreta'
