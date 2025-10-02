@@ -14,9 +14,10 @@ router.post('/login',
         sub: user.id,
         role: user.role,
       }
-      const token = jwt.sign(payload, secret)
+      const token = jwt.sign(payload, config.jwtSecret)
       res.json({
         user,
+        token
       });
     } catch (error) {
       next(error);
