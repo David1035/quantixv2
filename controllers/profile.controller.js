@@ -2,6 +2,7 @@ const express = require('express');
 const ProfileService = require('./../services/profile.service');
 const validatorHandler = require('./../middlewares/validation.handler');
 const { createProfileSchema, updateProfileSchema, getProfileSchema } = require('./../schemas/profile.schema');
+const passport = require('passport');
 
 const router = express.Router();
 const service = new ProfileService();
@@ -22,6 +23,7 @@ router.post('/',
 );
 
 router.get('/',
+  passport.authenticate('jwt', { session: false }),
   async (req, res, next) => {
     try {
       const data = await service.find();

@@ -31,8 +31,13 @@ class ProfileService {
 
   async find() {
     const data = await models.Profile.findAll({
-      include: ['user']
+      include: [{
+        //incluir una relación, pero omitir el password, seguro y fácil de aplicar
+        association: 'user',
+        attributes: { exclude: ['password'] }
+      }]
     });
+
     return data;
   }
 
