@@ -85,18 +85,4 @@ router.delete('/:id',
   }
 );
 
-router.delete('/:id',
-  passport.authenticate('jwt', { session: false }),
-  checkARoles('administrador', 'admin'),
-  async (req, res, next) => {
-    try {
-      const { id } = req.params;
-      const data = await service.delete(id);
-      res.json(data);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 module.exports = router;

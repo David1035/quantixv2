@@ -36,3 +36,5 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=admin456
       - PMA_HOST=mysql
+
+  

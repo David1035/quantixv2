@@ -42,7 +42,9 @@ class ProfileService {
   }
 
   async findOne(id) {
-    const profile = await models.Profile.findByPk(id);
+    const profile = await models.Profile.findByPk(id, {
+      include: ['user']
+    });
     if(!profile) {
       throw boom.notFound('profile not found')
     }
@@ -64,3 +66,6 @@ class ProfileService {
 
 
 module.exports = ProfileService;
+
+
+
