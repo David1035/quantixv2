@@ -1,4 +1,3 @@
-```markdown
 # Quantixv2
 
 ## 🧭 Descripción General
@@ -11,8 +10,7 @@ Esta arquitectura está pensada para escalar fácilmente y ser consumida por fro
 
 ## 🧱 Arquitectura del Proyecto
 
-```
-
+```plaintext
 quantixv2/
 ├── config/              # Configuración general (DB, CORS, JWT, etc.)
 ├── controllers/         # Controladores: lógica para cada recurso
@@ -27,8 +25,7 @@ quantixv2/
 ├── .envModel            # Plantilla base para configuración de entorno
 ├── package.json         # Dependencias y scripts del proyecto
 └── index.js             # Punto de entrada del servidor Express
-
-````
+```
 
 ---
 
@@ -38,19 +35,16 @@ quantixv2/
 ```bash
 git clone https://github.com/David1035/quantixv2.git
 cd quantixv2
-````
+```
 
 ### 2️⃣ Configurar Variables de Entorno
-
 Copia el archivo `.envModel` como `.env` y completa los valores según tu entorno:
-
 ```bash
 cp .envModel .env
 ```
 
 Ejemplo:
-
-```
+```plaintext
 PORT=3000
 DB_HOST=localhost
 DB_PORT=5432
@@ -61,25 +55,19 @@ JWT_SECRET=mi_super_secreto
 ```
 
 ### 3️⃣ Instalar Dependencias
-
 ```bash
 npm install
 ```
 
 ### 4️⃣ Ejecutar con Node.js
-
 ```bash
 npm start
 ```
 
 ### 5️⃣ (Opcional) Ejecutar con Docker
-
-Si deseas levantar los servicios con Docker:
-
 ```bash
 docker-compose up --build
 ```
-
 Esto levantará los contenedores definidos (API + PostgreSQL + pgAdmin si está configurado).
 
 ---
@@ -102,7 +90,6 @@ Esto levantará los contenedores definidos (API + PostgreSQL + pgAdmin si está 
 ## 🚀 Endpoints Principales
 
 > **Nota:** Todos los endpoints que requieren autenticación deben enviar el encabezado:
->
 > ```
 > Authorization: Bearer <tu_token_JWT>
 > ```
@@ -115,18 +102,14 @@ Esto levantará los contenedores definidos (API + PostgreSQL + pgAdmin si está 
 | `POST` | `/api/auth/login`    | Iniciar sesión y obtener token JWT | No   |
 
 #### Ejemplo de `POST /api/auth/login`
-
 **Request Body**
-
 ```json
 {
   "email": "usuario@correo.com",
   "password": "123456"
 }
 ```
-
 **Response 200**
-
 ```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -168,18 +151,15 @@ Esto levantará los contenedores definidos (API + PostgreSQL + pgAdmin si está 
 ## 🔑 Autenticación y Seguridad
 
 El proyecto usa **JWT (JSON Web Tokens)** para autenticación y autorización:
-
-* **Registro:** guarda contraseñas hasheadas con bcrypt.
-* **Login:** valida credenciales, genera un JWT firmado con `JWT_SECRET`.
-* **Middleware:** protege rutas verificando el token recibido en el header `Authorization`.
+- **Registro:** guarda contraseñas hasheadas con bcrypt.
+- **Login:** valida credenciales, genera un JWT firmado con `JWT_SECRET`.
+- **Middleware:** protege rutas verificando el token recibido en el header `Authorization`.
 
 ### Flujo:
-
 1. Usuario se registra o inicia sesión.
 2. Servidor responde con un token JWT.
 3. El cliente guarda el token en `localStorage` o `sessionStorage`.
 4. En cada solicitud protegida, envía el token con:
-
    ```
    Authorization: Bearer <token>
    ```
@@ -189,14 +169,13 @@ El proyecto usa **JWT (JSON Web Tokens)** para autenticación y autorización:
 
 ## 🗃️ Base de Datos (PostgreSQL + Sequelize)
 
-* **ORM:** Sequelize
-* **Driver:** pg / pg-hstore
-* **Conexión:** configurada en `config/` o `db/`
-* **Modelos:** definidos en `db/models/`
-* **Migraciones:** si aplican, se ejecutan antes de iniciar el servidor
+- **ORM:** Sequelize
+- **Driver:** pg / pg-hstore
+- **Conexión:** configurada en `config/` o `db/`
+- **Modelos:** definidos en `db/models/`
+- **Migraciones:** si aplican, se ejecutan antes de iniciar el servidor
 
 Ejemplo básico de modelo:
-
 ```js
 const User = sequelize.define('User', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -235,14 +214,11 @@ const User = sequelize.define('User', {
 Aunque el repositorio no incluye frontend, el backend está **completamente preparado para integrarse con un cliente** en React, Vue o cualquier otro framework.
 
 ### Recomendaciones:
-
 1. **Crear un cliente separado** (por ejemplo, `quantix-client`) y definir variables globales de API.
 2. **Configurar CORS** en el backend (`cors()` de Express) para aceptar peticiones del dominio del frontend.
 3. **Manejar autenticación**:
-
-   * Guardar el JWT en `localStorage` o cookies seguras.
-   * Enviar el token en cada petición:
-
+   - Guardar el JWT en `localStorage` o cookies seguras.
+   - Enviar el token en cada petición:
      ```js
      const token = localStorage.getItem("token");
      fetch(`${API_URL}/api/users`, {
@@ -250,8 +226,7 @@ Aunque el repositorio no incluye frontend, el backend está **completamente prep
      });
      ```
 4. **Estructura sugerida del cliente:**
-
-   ```
+   ```plaintext
    src/
    ├── api/             # funciones fetch/Axios para consumir la API
    ├── components/      # componentes reutilizables
@@ -260,39 +235,32 @@ Aunque el repositorio no incluye frontend, el backend está **completamente prep
    └── utils/           # helpers y configuración
    ```
 5. **Ciclo típico:**
-
-   * Login → guardar token → acceder a dashboard → consumir endpoints.
-   * Logout → eliminar token → redirigir a login.
+   - Login → guardar token → acceder a dashboard → consumir endpoints.
+   - Logout → eliminar token → redirigir a login.
 6. **Seguridad:**
-
-   * Validar campos antes de enviar.
-   * Manejar errores de token expirado (`401 Unauthorized`).
+   - Validar campos antes de enviar.
+   - Manejar errores de token expirado (`401 Unauthorized`).
 
 ---
 
 ## 🧾 Mejores Prácticas y Extensiones
 
-* Implementar documentación Swagger (`swagger-ui-express`).
-* Usar `helmet` para seguridad HTTP.
-* Añadir pruebas unitarias con Jest o Mocha.
-* Configurar GitHub Actions para CI/CD.
-* Implementar versionamiento de API (`/api/v1/`).
+- Implementar documentación Swagger (`swagger-ui-express`).
+- Usar `helmet` para seguridad HTTP.
+- Añadir pruebas unitarias con Jest o Mocha.
+- Configurar GitHub Actions para CI/CD.
+- Implementar versionamiento de API (`/api/v1/`).
 
 ---
 
 ## 👨‍💻 Autor
-
-**Nelson David Hernández Gómez**
-Desarrollador Backend y Frontend
-📧 [davyd2h@gmail.com](mailto:davyd2h@gmail.com)
+**Nelson David Hernández Gómez**  
+Desarrollador Backend y Frontend  
+📧 [davyd2h@gmail.com](mailto:davyd2h@gmail.com)  
 🔗 [GitHub: David1035](https://github.com/David1035)
 
 ---
 
 ## 📜 Licencia
-
-Este proyecto se distribuye bajo la licencia MIT.
+Este proyecto se distribuye bajo la licencia MIT.  
 Consulta el archivo `LICENSE` para más detalles.
-
----
-
