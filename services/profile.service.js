@@ -9,15 +9,15 @@ class ProfileService {
   }
 
   async create(body){
-    // const hash = await bcrypt.hash(body.user.password, 10);
-    // const newData = {
-    //   ...body,
-    //   user: {
-    //     ...body.user,
-    //     password: hash
-    //   }
-    //}
-    const newProfile = await models.Profile.create(body,{
+    const hash = await bcrypt.hash(body.user.password, 10);
+    const newData = {
+      ...body,
+      user: {
+        ...body.user,
+        password: hash
+      }
+    }
+    const newProfile = await models.Profile.create(newData,{
       include: ['user']
     });
 
