@@ -12,16 +12,16 @@ const ProductModel = {
     type: DataTypes.INTEGER
   },
   name: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING
   },
   salePrice: {
-    allowNull: false,
+    allowNull: true,
     field: 'sale_price',
     type: DataTypes.DECIMAL(10, 2)
   },
   stock: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER
   },
   categoryId: {
@@ -36,7 +36,7 @@ const ProductModel = {
     onDelete: 'RESTRICT'
   },
   createdAt: {
-    allowNull: false,
+    allowNull: true,
     field: 'created_at',
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW

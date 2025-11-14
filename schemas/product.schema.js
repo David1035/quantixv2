@@ -9,7 +9,7 @@ const categoryId = Joi.number().integer().required();
 const createProductSchema = Joi.object({
   name: name.required(),
   salePrice: salePrice.required(),
-  stock: stock.required(),
+  stock: stock,
   categoryId: categoryId
 });
 

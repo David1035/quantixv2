@@ -22,12 +22,12 @@ const CreditModel = {
     onDelete: 'SET NULL'
   },
   totalAmount: {
-    allowNull: false,
+    allowNull: true,
     field: 'total_amount',
     type: DataTypes.DECIMAL(10,2)
   },
   isActive: {
-    allowNull: false,
+    allowNull: true,
     field: 'is_active',
     type: DataTypes.BOOLEAN,
     defaultValue: true

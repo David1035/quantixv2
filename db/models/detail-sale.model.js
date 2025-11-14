@@ -14,7 +14,7 @@ const DetailSaleModel = {
   },
   saleId: {
     field: 'sale_id',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: {
       model: SALE_TABLE,
@@ -25,7 +25,7 @@ const DetailSaleModel = {
   },
   productId: {
     field: 'product_id',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: {
       model: PRODUCT_TABLE,
@@ -35,11 +35,11 @@ const DetailSaleModel = {
     onDelete: 'CASCADE'
   },
   cantidad: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
   },
   subtotal: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.DECIMAL(10,2)
   },
   createdAt: {

@@ -10,11 +10,11 @@ const SupplierModel = {
     type: DataTypes.INTEGER
   },
   name: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING
   },
   contacto: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING
   },
   createdAt: {

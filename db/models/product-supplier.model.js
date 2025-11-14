@@ -13,7 +13,7 @@ const ProductSupplierModel = {
   },
   productId: {
     field: 'product_id',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: {
       model: PRODUCT_TABLE,
@@ -24,7 +24,7 @@ const ProductSupplierModel = {
   },
   supplierId: {
     field: 'supplier_id',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: {
       model: SUPPLIER_TABLE,

@@ -32,18 +32,19 @@ module.exports = {
   },
 
   async down (queryInterface) {
+    // Tablas que dependen de otras (deben eliminarse primero)
+    await queryInterface.dropTable(DETAIL_SALE_TABLE);
+    await queryInterface.dropTable(INVOICE_TABLE);
+    await queryInterface.dropTable(SALE_TABLE);
+    await queryInterface.dropTable(PRODUCT_SUPPLIER_TABLE);
     await queryInterface.dropTable(CREDIT_PAYMENTS_TABLE);
+    // Dependencias intermedias
     await queryInterface.dropTable(CREDIT_TABLE);
+    await queryInterface.dropTable(PRODUCT_TABLE);
+    await queryInterface.dropTable(CATEGORY_TABLE);
+    await queryInterface.dropTable(SUPPLIER_TABLE);
     await queryInterface.dropTable(CUSTOMER_TABLE);
     await queryInterface.dropTable(PROFILE_TABLE);
     await queryInterface.dropTable(USER_TABLE);
-    await queryInterface.dropTable(PRODUCT_SUPPLIER_TABLE);
-    await queryInterface.dropTable(PRODUCT_TABLE);
-    await queryInterface.dropTable(SUPPLIER_TABLE);
-    await queryInterface.dropTable(INVOICE_TABLE);
-    await queryInterface.dropTable(SALE_TABLE);
-    await queryInterface.dropTable(DETAIL_SALE_TABLE);
-  }
-
-
+    }
 };

@@ -9,7 +9,7 @@ const CustomerModel = {
     type: DataTypes.INTEGER
   },
   name: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING
   },
   lastName: {
@@ -17,7 +17,7 @@ const CustomerModel = {
     type: DataTypes.STRING
   },
   document: {
-    allowNull: false,
+    allowNull: true,
     unique: true,
     type: DataTypes.INTEGER
   },
@@ -26,7 +26,7 @@ const CustomerModel = {
     type: DataTypes.STRING
   },
   estadoCredito: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     field: 'estado_credito'

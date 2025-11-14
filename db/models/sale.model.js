@@ -18,7 +18,7 @@ const SaleModel = {
     defaultValue: Sequelize.NOW
   },
   total: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.DECIMAL(10,2)
   },
   customerId: {
@@ -34,7 +34,7 @@ const SaleModel = {
   },
   userId: {
     field: 'user_id',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: {
       model: USER_TABLE,

@@ -11,7 +11,7 @@ const CreditPaymentsModel = {
     type: DataTypes.INTEGER
   },
   creditId: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     field: 'credit_id',
     references: {
@@ -22,7 +22,7 @@ const CreditPaymentsModel = {
     onDelete: 'CASCADE'
   },
   paymentsAmount: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.DECIMAL(10, 2),
     field: 'payments_amount',
   },

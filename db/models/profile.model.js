@@ -11,21 +11,21 @@ const ProfileModel = {
     type: DataTypes.INTEGER
   },
   name: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING
   },
   lastName: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING,
     field: 'last_name'
   },
   document: {
-    allowNull: false,
+    allowNull: true,
     unique: true,
     type: DataTypes.INTEGER
   },
   phone: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING
   },
   createdAt: {
@@ -36,7 +36,7 @@ const ProfileModel = {
   },
   userId: {
     unique: true,
-    allowNull: false,
+    allowNull: true,
     field: 'user_id',
     type: DataTypes.INTEGER,
     references: {

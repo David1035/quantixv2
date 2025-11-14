@@ -19,7 +19,7 @@ const UserModel = {
     type: DataTypes.STRING
   },
   role: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.STRING,
     defaultValue: 'vendedor'
   },

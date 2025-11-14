@@ -12,18 +12,18 @@ const InvoiceModel = {
     type: DataTypes.INTEGER
   },
   fecha: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW
   },
   montoTotal: {
     field: 'monto_total',
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.DECIMAL(10,2)
   },
   saleId: {
     field: 'sale_id',
-    allowNull: false,
+    allowNull: true,
     unique: true,
     type: DataTypes.INTEGER,
     references: {
