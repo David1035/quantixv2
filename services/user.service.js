@@ -1,5 +1,5 @@
 const { models } = require('./../libs/sequelize')
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 
 class UserService {
   constructor() {}
@@ -11,7 +11,7 @@ class UserService {
     //   password: hash
     // });
     const newUser = await models.User.create(body)
-    delete newUser.dataValues.password;
+    //delete newUser.dataValues.password;
     return newUser;
   }
 

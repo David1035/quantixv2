@@ -12,8 +12,8 @@ const service = new ProfileService();
 
 
 router.post('/',
-  passport.authenticate('jwt', { session: false }),
-  checkARoles('administrador', 'admin'),
+  //passport.authenticate('jwt', { session: false }),
+  //checkARoles('administrador', 'admin'),
   validatorHandler(createProfileSchema, 'body'),
   async (req, res, next) => {
     try {
