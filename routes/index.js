@@ -11,6 +11,8 @@ const supplierController = require('./../controllers/supplier.controller');
 const productSupplierController = require('./../controllers/product-supplier.controller');
 const detailSaleController = require('./../controllers/detail-sale.controller');
 const authController = require('./../controllers/auth.controller');
+const creditController = require('./../controllers/credit.controller');
+const creditPaymentsController = require('./../controllers/credit-payments.controller');
 
 
 
@@ -30,6 +32,9 @@ function routerApi(app) {
   router.use('/productSuppliers', productSupplierController);
   router.use('/detailSales', detailSaleController);
   router.use('/auth', authController);
+  router.use('/credits', creditController);
+  router.use('/creditPayments', creditPaymentsController);
+
 }
 
 

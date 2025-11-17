@@ -17,7 +17,7 @@ class ProductSupplierService {
   async findOne(id){
     const data = await models.ProductSupplier.findByPk(id);
     if(!data){
-      throw new boom.notFound('Venta no encontrada');
+      throw  boom.notFound('Venta no encontrada');
     }
 
     return data;

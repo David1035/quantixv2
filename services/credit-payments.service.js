@@ -17,7 +17,7 @@ class CreditPaymentsService {
   async findOne(id){
     const data = await models.CreditPayments.findByPk(id);
     if(!data){
-      throw new boom.notFound('Venta no encontrada');
+      throw boom.notFound('Venta no encontrada');
     }
 
     return data;
@@ -29,7 +29,7 @@ class CreditPaymentsService {
     return rta;
   }
 
-  async detele(id){
+  async delete(id){
     const data = await this.findOne(id);
     await data.destroy();
     return { id, status: 'eliminado' }

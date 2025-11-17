@@ -17,7 +17,7 @@ class InvoiceService {
   async findOne(id){
     const oneInvoice = await models.Invoice.findByPk(id);
     if(!oneInvoice){
-      throw new boom.notFound('Factura no encontrada')
+      throw  boom.notFound('Factura no encontrada')
     }
     return oneInvoice;
   }
