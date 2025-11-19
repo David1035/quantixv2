@@ -261,6 +261,131 @@ Desarrollador Backend y Frontend
 
 ---
 
+## 🧰 Tecnologías utilizadas
+
+### Backend
+
+- **Node.js** – Entorno de ejecución de JavaScript en servidor.
+- **Express** – Framework para construir la API REST (`/api/v1/...`).
+- **PostgreSQL** – Motor de base de datos relacional.
+- **Sequelize** – ORM para modelar entidades y relaciones:
+  - `User`, `Profile`, `Customer`, `Product`, `Category`
+  - `Supplier`, `ProductSupplier`
+  - `Sale`, `DetailSale`, `Invoice`
+  - `Credit`, `CreditPayments`
+- **Passport** – Middleware de autenticación:
+  - `passport-local` para login con **email / password**.
+  - `passport-jwt` para validar tokens JWT en rutas protegidas.
+- **jsonwebtoken** – Generación y firma de tokens JWT.
+- **bcrypt** – Hash de contraseñas antes de persistir en base de datos.
+- **Joi** – Validación de datos de entrada (body, params) en cada endpoint.
+- **@hapi/boom** – Manejo consistente de errores HTTP.
+- **dotenv / dotenvx** – Gestión de variables de entorno (`.env`).
+- **nodemon** (dev) – Recarga automática del servidor en desarrollo.
+
+### Frontend
+
+- **HTML5** – Vistas desacopladas por módulo:
+  - `login.html`, `index.html`, `users.html`, `profiles.html`,
+    `customers.html`, `credits.html`, `credit-payments.html`,
+    `categories.html`, `products.html`, `suppliers.html`,
+    `product-suppliers.html`, `ingresos.html`, `sales.html`, etc.
+- **CSS3** (sin framework) – Hoja de estilos única:
+  - Layout con sidebar, topbar y tarjetas (`.sidebar`, `.topbar`, `.card`).
+  - Sistema de grillas (`.grid-2`, `.grid-3`, `.grid-4`) y utilidades (`.mt-8`, `.mt-16`, `.muted`).
+- **JavaScript (ES Modules)** – Frontend modular y sin framework:
+  - `assets/js/apiConfig.js` – `API_BASE`, `endpoints`, helpers de JWT.
+  - `assets/js/guard.js` – `requireAuth()` y `logout()`.
+  - Módulos por entidad:
+    - `users.controller.js` / `users.service.js`
+    - `profiles.controller.js` / `profiles.service.js`
+    - `customers`, `credits`, `credit-payments`
+    - `categories`, `products`
+    - `suppliers`, `product-suppliers`
+    - `ingresos.controller.js` / `ingresos.service.js`
+  - Consumo del backend mediante **Fetch API** (`fetch`) y JSON.
+  - Gestión de sesión con **localStorage** (`quantix_token`, `currentUser`).
+
+---
+
+## 🔐 Estrategia de autenticación y autorización
+
+La seguridad de Quantixv2 se basa en una combinación de **login con credenciales** y **tokens JWT**:
+
+1. **Login (Autenticación inicial)**  
+   - Endpoint: `POST /api/v1/auth/login`
+   - Implementado con `passport-local`:
+     - Campo de usuario: `email`
+     - Campo de contraseña: `password`
+   - Flujo:
+     1. El usuario envía `email` y `password`.
+     2. Se busca el usuario con `UserService.findByEmail(email)`.
+     3. Se compara la contraseña con `bcrypt.compare(password, user.password)`.
+     4. Si las credenciales son válidas:
+        - Se elimina `password` del objeto de usuario.
+        - Se genera un **JWT** con `jsonwebtoken.sign()`:
+          ```js
+          const payload = { sub: user.id, role: user.role };
+          const token = jwt.sign(payload, config.jwtSecret);
+          ```
+        - El backend responde con:
+          ```json
+          {
+            "user": { ...sin password },
+            "token": "<JWT>"
+          }
+          ```
+
+2. **Protección de rutas (JWT)**  
+   - Estrategia `passport-jwt`:
+     - Extrae el token del header: `Authorization: Bearer <token>`.
+     - Valida y decodifica usando `config.jwtSecret`.
+   - Rutas protegidas usan:
+     ```js
+     passport.authenticate('jwt', { session: false })
+     ```
+   - El payload (`sub`, `role`) queda disponible en `req.user`.
+
+3. **Control de roles (`checkARoles`)**  
+   - Middleware personalizado para autorización por rol:
+     ```js
+     checkARoles('admin', 'administrador')
+     ```
+   - Se aplica en módulos sensibles como **perfiles**, créditos, etc.
+   - Permite restringir acciones (crear, actualizar, eliminar) según el `role` del usuario.
+
+4. **Gestión de sesión en el frontend**  
+   - Al hacer login, el frontend:
+     - Guarda el token en `localStorage`:
+       ```js
+       setToken(data.token); // 'quantix_token'
+       localStorage.setItem("currentUser", JSON.stringify(data.user));
+       ```
+     - Redirige a `index.html` (dashboard).
+   - Todas las peticiones posteriores añaden:
+     ```js
+     headers: {
+       Authorization: `Bearer ${token}`,
+       ...
+     }
+     ```
+     mediante `authHeaders()` en `apiConfig.js`.
+   - Cada vista protegida llama a `requireAuth()` (en `guard.js`):
+     - Si no hay token válido en `localStorage`, redirige a `login.html`.
+
+5. **Cierre de sesión (logout)**  
+   - Botón "Cerrar sesión" en el frontend:
+     - Limpia el token y el usuario actual de `localStorage`.
+     - Redirige al formulario de login.
+   - Implementado con `logout()` en `guard.js`.
+
+Esta estrategia garantiza que:
+
+- Sólo usuarios autenticados pueden consumir los endpoints protegidos.
+- Los permisos se controlan por rol desde el backend.
+- El frontend permanece desacoplado, utilizando únicamente el token JWT para autenticarse frente a la API.
+
+
 ## 📜 Licencia
 Este proyecto se distribuye bajo la licencia MIT.  
 Consulta el archivo `LICENSE` para más detalles.
