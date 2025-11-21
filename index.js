@@ -5,6 +5,8 @@ const { logErrors, ormErrorHandler, boomErrorHandler, errorHandler } = require('
 
 const { checkApiKey } = require('./middlewares/auth.handler');
 
+const seedAdminUser = require('./utils/seedAdmin');
+
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -26,6 +28,8 @@ app.use(errorHandler);
 
 
 
-app.listen(port, () => {
-  console.log('server in port ', port)
+app.listen(port, async () => {
+  console.log('server in port ', port);
+
+  await seedAdminUser();
 })
