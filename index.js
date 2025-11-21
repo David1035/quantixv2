@@ -18,7 +18,7 @@ app.get('/nueva-ruta', checkApiKey, (req, res) => {
   res.send('hola, soy una nueva ruta')
 })
 
-routerApi(app); // escuchamos la ruta, y enviamos el body, params,  y query
+routerApi(app); // escuchamos la ruta, y enviamos el body, params,  y query --
 app.use(logErrors);
 app.use(ormErrorHandler);
 app.use(boomErrorHandler);
